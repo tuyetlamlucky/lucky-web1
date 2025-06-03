@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -47,8 +8,8 @@
     <meta name="keywords" content="LUCKY, Nguyễn Chí Tài, thuê slot, 1v4, dpi-fix, hack game, acc ff">
     <meta property="og:title" content="Nguyễn Chí Tài - LUCKY">
     <meta property="og:type" content="Website">
-    <meta property="og:url" content="https://dichvumxh211.io.vn">
-    <meta property="og:image" content="https://via.placeholder.com/150">
+    <meta property="og:url" content="https://tên-người-dùng.github.io/lucky-web1/">
+    <meta property="og:image" content="https://tên-người-dùng.github.io/lucky-web1/avata.jpg">
     <meta property="og:description" content="Dịch vụ LUCKY - Thuê slot bắn phòng, thử sức 1v4, cung cấp dpi-fix, hack game, acc FF giá rẻ.">
     <meta property="og:site_name" content="LUCKY">
 
@@ -122,8 +83,8 @@
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-8">
-                    <img src="https://via.placeholder.com/150" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4">
-                    <h1 class="text-3xl font-bold text-blue-600">Nguyễn Chí Tài <img src="/assets/default/images/verify.gif" alt="Đã Xác Minh" style="height: 23px;"></h1>
+                    <img src="./avata.jpg" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4">
+                    <h1 class="text-3xl font-bold text-blue-600">Nguyễn Chí Tài <img src="./verify.gif" alt="Đã Xác Minh" style="height: 23px;"></h1>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -134,11 +95,11 @@
                             <b>FACEBOOK:</b> <a href="https://www.facebook.com/ngchitai28" target="_blank" class="text-blue-600 hover:underline">Nguyễn Chí Tài</a>
                         </p>
                         <p class="mb-2">
-                            <span class="inline-block w-6"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Zalo_logo.svg/1200px-Zalo_logo.svg.png" alt="Zalo" class="h-5"></span>
+                            <span class="inline-block w-6"><img src="./zalo.png" alt="Zalo" class="h-5"></span>
                             <b>ZALO:</b> <span>0363848052</span>
                         </p>
                         <p class="mb-2">
-                            <span class="inline-block w-6"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Zalo_logo.svg/1200px-Zalo_logo.svg.png" alt="Zalo" class="h-5"></span>
+                            <span class="inline-block w-6"><img src="./zalo.png" alt="Zalo" class="h-5"></span>
                             <b>NHÓM ZALO:</b> 
                         </p>
                         <p>
@@ -166,17 +127,17 @@
                     <h2 class="text-xl font-bold text-blue-500 mb-4">THÔNG TIN BANK</h2>
                     <ul class="list-none pl-0">
                         <li class="mb-2 flex items-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/MoMo_Logo.svg/1200px-MoMo_Logo.svg.png" alt="Momo" class="h-5 mr-2">
+                            <img src="./momo.png" alt="Momo" class="h-5 mr-2">
                             <span><b>MOMO:</b> 0363848052 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
                             <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="0363848052"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="mb-2 flex items-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/MB_Bank_logo.svg/1200px-MB_Bank_logo.svg.png" alt="MBank" class="h-5 mr-2">
+                            <img src="./mbbank.jpg" alt="MBank" class="h-5 mr-2">
                             <span><b>MBANK:</b> 0363848052 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
                             <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="0363848052"><i class="fas fa-copy"></i></a>
                         </li>
                         <li class="flex items-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/MB_Bank_logo.svg/1200px-MB_Bank_logo.svg.png" alt="MBank" class="h-5 mr-2">
+                            <img src="./mbbank.jpg" alt="MBank" class="h-5 mr-2">
                             <span><b>MBANK:</b> 4428082009 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
                             <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="4428082009"><i class="fas fa-copy"></i></a>
                         </li>
