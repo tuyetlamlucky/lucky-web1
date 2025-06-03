@@ -1,0 +1,215 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Trang web của Nguyễn Chí Tài - Cung cấp dịch vụ LUCKY và thông tin liên hệ.">
+    <meta name="keywords" content="LUCKY, Nguyễn Chí Tài, thuê slot, 1v4, dpi-fix, hack game, acc ff">
+    <meta property="og:title" content="Nguyễn Chí Tài - LUCKY">
+    <meta property="og:type" content="Website">
+    <meta property="og:url" content="https://dichvumxh211.io.vn">
+    <meta property="og:image" content="https://via.placeholder.com/150">
+    <meta property="og:description" content="Dịch vụ LUCKY - Thuê slot bắn phòng, thử sức 1v4, cung cấp dpi-fix, hack game, acc FF giá rẻ.">
+    <meta property="og:site_name" content="LUCKY">
+
+    <title>LUCKY</title>
+    <link rel="icon" href="/assets/default/images/adminfav.png">
+    <link rel="apple-touch-icon" href="/assets/default/images/adminfav.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @-webkit-keyframes snowflakes-fall {
+            0% {top:-10%} 100% {top:100%}
+        }
+        @-webkit-keyframes snowflakes-shake {
+            0%,100% {-webkit-transform:translateX(0);transform:translateX(0)} 50% {-webkit-transform:translateX(80px);transform:translateX(80px)}
+        }
+        @keyframes snowflakes-fall {
+            0% {top:-10%} 100% {top:100%}
+        }
+        @keyframes snowflakes-shake {
+            0%,100% {transform:translateX(0)} 50% {transform:translateX(80px)}
+        }
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px #000;
+            position: fixed;
+            top: -10%;
+            z-index: 9999;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+            -webkit-animation-name: snowflakes-fall, snowflakes-shake;
+            -webkit-animation-duration: 10s, 3s;
+            -webkit-animation-timing-function: linear, ease-in-out;
+            -webkit-animation-iteration-count: infinite, infinite;
+            -webkit-animation-play-state: running, running;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s;
+            animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite;
+            animation-play-state: running, running;
+        }
+        .snowflake:nth-of-type(0) { left: 1%; -webkit-animation-delay: 0s, 0s; animation-delay: 0s, 0s; }
+        .snowflake:nth-of-type(1) { left: 10%; -webkit-animation-delay: 1s, 1s; animation-delay: 1s, 1s; }
+        .snowflake:nth-of-type(2) { left: 20%; -webkit-animation-delay: 6s, .5s; animation-delay: 6s, .5s; }
+        .snowflake:nth-of-type(3) { left: 30%; -webkit-animation-delay: 4s, 2s; animation-delay: 4s, 2s; }
+        .snowflake:nth-of-type(4) { left: 40%; -webkit-animation-delay: 2s, 2s; animation-delay: 2s, 2s; }
+        .snowflake:nth-of-type(5) { left: 50%; -webkit-animation-delay: 8s, 3s; animation-delay: 8s, 3s; }
+        .snowflake:nth-of-type(6) { left: 60%; -webkit-animation-delay: 6s, 2s; animation-delay: 6s, 2s; }
+        .snowflake:nth-of-type(7) { left: 70%; -webkit-animation-delay: 2.5s, 1s; animation-delay: 2.5s, 1s; }
+        .snowflake:nth-of-type(8) { left: 80%; -webkit-animation-delay: 1s, 0s; animation-delay: 1s, 0s; }
+        .snowflake:nth-of-type(9) { left: 90%; -webkit-animation-delay: 3s, 1.5s; animation-delay: 3s, 1.5s; }
+        .snowflake:nth-of-type(10) { left: 25%; -webkit-animation-delay: 2s, 0s; animation-delay: 2s, 0s; }
+        .snowflake:nth-of-type(11) { left: 65%; -webkit-animation-delay: 4s, 2.5s; animation-delay: 4s, 2.5s; }
+        .profile-box:hover { transform: translateY(-5px); transition: transform 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center">
+                <div class="text-2xl font-bold text-blue-600">LUCKY</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <img src="https://via.placeholder.com/150" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4">
+                    <h1 class="text-3xl font-bold text-blue-600">Nguyễn Chí Tài <img src="/assets/default/images/verify.gif" alt="Đã Xác Minh" style="height: 23px;"></h1>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="profile-box bg-white p-6 rounded-xl shadow-md border-2 border-blue-500">
+                        <h2 class="text-xl font-bold text-blue-500 mb-4">THÔNG TIN LIÊN HỆ NGUYỄN CHÍ TÀI !</h2>
+                        <p class="mb-2">
+                            <span class="inline-block w-6"><i class="fab fa-facebook-f text-blue-600"></i></span>
+                            <b>FACEBOOK:</b> <a href="https://www.facebook.com/ngchitai28" target="_blank" class="text-blue-600 hover:underline">Nguyễn Chí Tài</a>
+                        </p>
+                        <p class="mb-2">
+                            <span class="inline-block w-6"><img src="/assets/default/images/icons8-zalo-50.png" alt="Zalo" class="h-5"></span>
+                            <b>ZALO:</b> <span>0363848052</span>
+                        </p>
+                        <p class="mb-2">
+                            <span class="inline-block w-6"><img src="/assets/default/images/icons8-zalo-50.png" alt="Zalo" class="h-5"></span>
+                            <b>NHÓM ZALO:</b> 
+                        </p>
+                        <p>
+                            <span class="inline-block w-6"><i class="fab fa-tiktok text-blue-600"></i></span>
+                            <b>TIKTOK:</b> <a href="https://www.tiktok.com/@_lucky4440" target="_blank" class="text-blue-600 hover:underline">@_lucky4440</a>
+                        </p>
+                        <p>
+                            <span class="inline-block w-6"><i class="far fa-globe text-blue-600"></i></span>
+                            <b>WEBSITE:</b> 
+                        </p>
+                    </div>
+
+                    <div class="profile-box bg-white p-6 rounded-xl shadow-md border-2 border-blue-500">
+                        <h2 class="text-xl font-bold text-blue-500 mb-4">DỊCH VỤ CUNG CẤP !</h2>
+                        <p class="text-center">
+                            <b>⭐ Thuê slot bắn phòng 4v4 2k 1slot</b><br>
+                            <b>⭐ Thử sức 1v4 2v4 trên live TikTok 5k 1slot</b><br>
+                            <b>⭐ Cung cấp dpi-fix lag- hack game-mod skin</b><br>
+                            <b>⭐ Acc FF giá rẻ</b>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-box bg-white p-6 rounded-xl shadow-md border-2 border-blue-500 mb-8">
+                    <h2 class="text-xl font-bold text-blue-500 mb-4">THÔNG TIN BANK</h2>
+                    <ul class="list-none pl-0">
+                        <li class="mb-2 flex items-center">
+                            <img src="/assets/default/images/momo.png" alt="Momo" class="h-5 mr-2">
+                            <span><b>MOMO:</b> 0363848052 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
+                            <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="0363848052"><i class="fas fa-copy"></i></a>
+                        </li>
+                        <li class="mb-2 flex items-center">
+                            <img src="/assets/default/images/mbbank.jpeg" alt="MBank" class="h-5 mr-2">
+                            <span><b>MBANK:</b> 0363848052 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
+                            <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="0363848052"><i class="fas fa-copy"></i></a>
+                        </li>
+                        <li class="flex items-center">
+                            <img src="/assets/default/images/mbbank.jpeg" alt="MBank" class="h-5 mr-2">
+                            <span><b>MBANK:</b> 4428082009 - <span class="text-red-600">NGUYEN CHI TAI</span></span>
+                            <a href="javascript:void(0)" class="ml-2 copy-text text-blue-600" data-text="4428082009"><i class="fas fa-copy"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">🍉</div>
+        <div class="snowflake">🍈</div>
+        <div class="snowflake">🍄</div>
+        <div class="snowflake">🍐</div>
+        <div class="snowflake">⭐</div>
+        <div class="snowflake">❤️</div>
+        <div class="snowflake">☘️</div>
+        <div class="snowflake">🌸</div>
+        <div class="snowflake">🌷</div>
+        <div class="snowflake">💕</div>
+        <div class="snowflake">💌</div>
+        <div class="snowflake">💮</div>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            var text = document.querySelector(`[data-text="${elementId}"]`).getAttribute('data-text');
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Đã sao chép: " + text);
+            }, function(err) {
+                console.error('Không thể sao chép: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
